@@ -16,13 +16,6 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
   + [Events](#events--events)
   + [Properties](#properties)
   + [Misc](#misc)
-- [Practices](#practices)
-  + [Serialized Fields](#serialized-fields)
-  + [Properties](#properties)
-  + [Optimization](#optimization)
-  + [Inheritence](#inheritence)
-  + [Interfaces](#interfaces)
-  + [Tooltips](#tooltips)
 - [Declarations](#declarations)
   + [Access Level Modifiers](#access-level-modifiers)
   + [Fields & Variables](#fields--variables)
@@ -36,6 +29,15 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
 - [Switch Statements](#switch-statements)
 - [Language](#language)
 - [Version Control](#version-control)
+  + [Debug Message](#debug-messages)
+  + [Warnings & Errors](#warnings--errors)
+- [Practices](#practices)
+  + [Serialized Fields](#serialized-fields)
+  + [Properties](#properties)
+  + [Optimization](#optimization)
+  + [Inheritence](#inheritence)
+  + [Interfaces](#interfaces)
+  + [Tooltips](#tooltips)
 
 
 ## Nomenclature
@@ -211,6 +213,229 @@ XMLHTTPRequest
 String URL
 findPostByID
 ```
+
+## Declarations
+
+### Access Level Modifiers
+
+Access level modifiers should be explicitly defined for classes, methods and
+member variables. Always prefer the strictest version of access and use private
+whenever possible. This helps declutter the auto-complete list with unneeded variables and methods.
+
+### Fields & Variables
+
+Prefer single declaration per line.
+
+__BAD:__
+
+```c#
+string m_username, m_twitterHandle;
+```
+
+__GOOD:__
+
+```c#
+string m_username;
+string m_twitterHandle;
+```
+
+### Classes
+
+Exactly one class per source file, although inner classes are encouraged where
+scoping appropriate.
+
+### Interfaces
+
+All interfaces should be prefaced with the letter __I__. 
+
+__BAD:__
+
+```c#
+RadialSlider
+```
+
+__GOOD:__
+
+```c#
+IRadialSlider
+```
+
+## Spacing
+
+Spacing is especially important, as code needs to be easily readable. 
+
+### Indentation
+
+Indentation is using spaces - never tabs.
+
+#### Blocks
+
+Indentation for blocks uses 4 spaces:
+
+__BAD:__
+
+```c#
+for (int i = 0; i < 10; i++) 
+{
+  Debug.Log("index = " + i);
+}
+```
+
+__GOOD:__
+
+```c#
+for (int i = 0; i < 10; i++) 
+{
+    Debug.Log("index = " + i);
+}
+```
+
+#### Line Wraps
+
+Indentation for line wraps should use 8 spaces:
+
+__BAD:__
+
+```c#
+CoolUIWidget widget =
+    SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
+```
+
+__GOOD:__
+
+```c#
+CoolUIWidget widget =
+        SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
+```
+
+### Line Length
+
+Lines should be no longer than 100 characters long.
+
+
+### Vertical Spacing
+
+There should be exactly one blank line between methods to aid in visual clarity 
+and organization. Whitespace within methods should separate functionality, but 
+having too many sections in a method often means you should refactor into
+several methods.
+
+
+## Brace Style
+
+All braces should appear on their own lines. This helps to visually line up the 
+braces and clearly identify code blocks:
+
+__BAD:__
+
+```c#
+class MyClass {
+    void DoSomething() {
+        if (m_someTest) {
+            // ...
+        }
+        else {
+            // ...
+        }
+    }
+}
+```
+
+__GOOD:__
+
+```c#
+class MyClass 
+{
+    void DoSomething() 
+    {
+        if (m_someTest) 
+        {
+            // ...
+        } else 
+        {
+            // ...
+        }
+    }
+}
+```
+
+Conditional statements are always required to be enclosed with braces,
+irrespective of the number of lines required.
+
+__BAD:__
+
+```c#
+if (m_someTest)
+    DoSomething();
+if (m_someTest) DoSomethingElse();
+```
+
+__GOOD:__
+
+```c#
+if (m_someTest) 
+{
+    DoSomething();
+}
+if (m_someTest) { DoSomethingElse(); }
+```
+
+
+## Switch Statements
+
+Switch statements fall-through by default, but this can be unintuitive. Do __not__ use fall-through behavior. 
+
+Alway include the `default` case.
+
+## Language
+
+Use US English spelling.
+
+__BAD:__
+
+```c#
+string m_colour = "red";
+```
+
+__GOOD:__
+
+```c#
+string m_color = "red";
+```
+
+## Version Control
+
+We will be using Perforce as our version control solution. When working on the project, you should commit often in the 
+process. There are a few important things to remember when pushing code.
+
+### Debug Messages
+
+Debug messages are useful when trying to show messages in the console and perform simple debug tasks. However, they should be removed before pushing to master. 
+
+For example:
+
+__BAD:__
+
+```c#
+private void Start ()
+{
+    Debug.Log("This objects position before: " + this.gameObject.transform.position);
+    this.gameObject.rigidbody.AddForce(new Vector3.up, ForceMode.Impulse);
+}
+
+private void Update ()
+{
+    Debug.Log("This objects position after: " + this.gameObject.transform.position);
+}
+```
+
+These messages should be removed before pushing changes. This keeps everyone's console clean and there won't be any "debug spam".
+
+### Warnings and Errors
+
+While it is ok to push code that is incomplete, there should be no warnings or errors emitted for your code. 
+This includes yellow warnings that appear in the console, such as when a variable is declared but not used. Again, this is
+to keep the console clean for everyone to use and to stop errors before they start. 
 
 ## Practices
 
@@ -508,192 +733,3 @@ In combination with descriptive variable names, Tooltips can boost the clarity o
 __Note:__ Tooltips should not be used everywhere, nor should they be created before a class is finalized. This would
 violate the "premature optimization" rule. Only after a class has been _reasonably_ finalized should Tooltips be added,
 and only when it adds to the clarity of the project. 
-
-## Declarations
-
-### Access Level Modifiers
-
-Access level modifiers should be explicitly defined for classes, methods and
-member variables. Always prefer the strictest version of access and use private
-whenever possible. This helps declutter the auto-complete list with unneeded variables and methods.
-
-### Fields & Variables
-
-Prefer single declaration per line.
-
-__BAD:__
-
-```c#
-string m_username, m_twitterHandle;
-```
-
-__GOOD:__
-
-```c#
-string m_username;
-string m_twitterHandle;
-```
-
-### Classes
-
-Exactly one class per source file, although inner classes are encouraged where
-scoping appropriate.
-
-### Interfaces
-
-All interfaces should be prefaced with the letter __I__. 
-
-__BAD:__
-
-```c#
-RadialSlider
-```
-
-__GOOD:__
-
-```c#
-IRadialSlider
-```
-
-## Spacing
-
-Spacing is especially important, as code needs to be easily readable. 
-
-### Indentation
-
-Indentation is using spaces - never tabs.
-
-#### Blocks
-
-Indentation for blocks uses 4 spaces:
-
-__BAD:__
-
-```c#
-for (int i = 0; i < 10; i++) 
-{
-  Debug.Log("index = " + i);
-}
-```
-
-__GOOD:__
-
-```c#
-for (int i = 0; i < 10; i++) 
-{
-    Debug.Log("index = " + i);
-}
-```
-
-#### Line Wraps
-
-Indentation for line wraps should use 8 spaces:
-
-__BAD:__
-
-```c#
-CoolUIWidget widget =
-    SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
-```
-
-__GOOD:__
-
-```c#
-CoolUIWidget widget =
-        SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
-```
-
-### Line Length
-
-Lines should be no longer than 100 characters long.
-
-
-### Vertical Spacing
-
-There should be exactly one blank line between methods to aid in visual clarity 
-and organization. Whitespace within methods should separate functionality, but 
-having too many sections in a method often means you should refactor into
-several methods.
-
-
-## Brace Style
-
-All braces should appear on their own lines. This helps to visually line up the 
-braces and clearly identify code blocks:
-
-__BAD:__
-
-```c#
-class MyClass {
-    void DoSomething() {
-        if (m_someTest) {
-            // ...
-        }
-        else {
-            // ...
-        }
-    }
-}
-```
-
-__GOOD:__
-
-```c#
-class MyClass 
-{
-    void DoSomething() 
-    {
-        if (m_someTest) 
-        {
-            // ...
-        } else 
-        {
-            // ...
-        }
-    }
-}
-```
-
-Conditional statements are always required to be enclosed with braces,
-irrespective of the number of lines required.
-
-__BAD:__
-
-```c#
-if (m_someTest)
-    DoSomething();
-if (m_someTest) DoSomethingElse();
-```
-
-__GOOD:__
-
-```c#
-if (m_someTest) 
-{
-    DoSomething();
-}
-if (m_someTest) { DoSomethingElse(); }
-```
-
-
-## Switch Statements
-
-Switch statements fall-through by default, but this can be unintuitive. Do __not__ use fall-through behavior. 
-
-Alway include the `default` case.
-
-## Language
-
-Use US English spelling.
-
-__BAD:__
-
-```c#
-string m_colour = "red";
-```
-
-__GOOD:__
-
-```c#
-string m_color = "red";
-```
