@@ -354,11 +354,160 @@ and the object in question could be dragged to the reference. Different implemen
 needs of the situation, but the basic idea still holds: keep expensive operations in the initialization code, cache variables
 when appropriate, and declutter the various Update methods. 
 
-### Inheritence
+### Inheritance
+
+Inheritance hierarchies should be used where appropriate but kept shallow. While writing classes, if it becomes apparent there will be multiple uses for common code, then it should be abstracted away and placed in an inheritance relationship. 
+
+For example:
+
+```c#
+public abstract class Enemy
+{
+    [SerializeField]
+    protected int m_attackDamage;
+
+    protected Player m_player;
+    
+    private void Awake ()
+    {
+        m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
+    
+    protected virtual void AttackPlayer ()
+    {
+        m_player.Damage (m_attackDamage);
+    }
+    
+    protected abstract void Move ();
+}
+
+public class FlyingEnemy : Enemy
+{
+    protected override void AttackPlayer ()
+    {
+        base.AttackPlayer();
+        
+        // ... Extra code for animation, sound effects, particle effects, etc. 
+    }
+    
+    protected override void Move ()
+    {
+        // ... Method must be implemented because it's marked abstract in the Enemey class.
+    }
+}
+
+public class SwimmingEnemy : Enemy
+{
+    protected override void AttackPlayer ()
+    {
+        base.AttackPlayer();
+        
+        // ... Extra code for animation, sound effects, particle effects, etc. 
+    }
+    
+    protected override void Move ()
+    {
+        // ... Method must be implemented because it's marked abstract in the Enemey class.
+    }
+}
+```
+
+This simple example shows how some common code might be abstracted to a base class. Derived classes then override the 
+behavior by providing their own implementations while the `base` keyword allows for the original functionality to persist.
+
+Of note it's important to remember inheritance relationships: all of the member variables from the `Enemy` class are
+present in the `FlyingEnemy` and `SwimmingEnemy` classes and have the same accessability. This means that both of the 
+derived classes will have a variable exposed in the Editor to change the amount of damage an enemy does. 
 
 ### Interfaces
 
+When discussing interfaces it's important to distinguish between actual `interface` implementations and the design strategy
+of using interfaces.
+
+An actual interface in C# is defined as follows:
+
+```c#
+public interface IInterface
+{
+    void DoInterfaceThing();
+    bool InterfaceBool { get; set; }
+}
+```
+
+Everything inside of an `interface` is automatically public -- no keyword is needed to distinguish this. 
+Also, implementations cannot be provided. An interface is a sort of contract, and if a class inherits 
+from an `interface` then it must implement all of the methods/properties declared in the interface.
+
+There are two distinct advantages to using interfaces: first, they allow common methods/properties to be defined
+in a way that doesn't require a base implementation; and second, a class can inherit from multiple interfaces,
+whereas multiple inheritence is not allowed in C#.
+
+The second way of viewing interfaces is through the lense of a design strategy: when designing code using this
+strategy, one thinks about the things a class should be able to perform and the analogous public methods/properties
+needed to achieve those goals. Before actually creating the implementation details, the public methods are agreed
+upon and form a contract. Then the implementation is provided, but irrespective of the actual method declarations.
+
+For example, if one was trying to design an audio service that is capable of playing music, sound effects, and narration,
+then one could create the following interface:
+
+```c#
+public interface IAudioService
+{
+    void PlaySoundEffect2D(string audioFileName);
+    void PlaySoundEffect2D(string audioFileName, float volume);
+    void PlaySoundEffect2D(string audioFileName, float volume, bool loop);
+    void StopSoundEffect2D(string audioFileName);
+    void StopAllSoundEffects2D();
+    
+    void PlaySoundEffect3D(string audioFileName, Vector3 location);
+    void PlaySoundEffect3D(string audioFileName, Vector3 location, float volume);
+    void PlaySoundEffect3D(string audioFileName, Vector3 location, float volume, bool loop);
+    void StopSoundEffect3D(string audioFileName);
+    void StopAllSoundEffects3D();
+    
+    void PlayMusic(string audioFileName, string layer);
+    void PlayMusic(string audioFileName, string layer, float volume);
+    void PlayMusic(string audioFileName, string layer, float volume, bool loop);
+    void SetLayerVolume(string layer, float volume);
+    void PauseLayer(string layer, bool pause);
+    void RestartLayer(string layer);
+    
+    void PlayNarration(string audioFileName);
+    void PlayNarration(string audioFileName, float otherAudioTargetVolume);
+}
+```
+
+The methods above constitute the contract for the `IAudioService` interface. There are no implementation details, 
+but these methods cover the needs of such an audio system (certainly more could be added, it just depends on the 
+needs of the project, and this is simply an example).
+
+After the interface is created, the implementation details are instituted. Perhaps a `Dictionary` would be used to 
+store the audio clips, or maybe they are dynamically loaded at runtime and attached to a sound prefab. However,
+_it doesn't matter what the details are_ as long as the methods perform the necessary duties set forth in the contract. 
+
+When possible, classes should be designed in this way.
+
 ### Tooltips
+
+Tooltips are small messages that appear when a property in the Editor is hovered over. These often communicate the purpose
+of a field to a designer. 
+
+For example:
+
+```c#
+public class MyClass
+{
+    [SerializeField]
+    [Tooltip("This integer indicates the priority of this script: higher numbers have a more important precedence.")]
+    private int m_myInt;
+}
+```
+
+In combination with descriptive variable names, Tooltips can boost the clarity of the project. 
+
+__Note:__ Tooltips should not be used everywhere, nor should they be created before a class is finalized. This would
+violate the "premature optimization" rule. Only after a class has been _reasonably_ finalized should Tooltips be added,
+and only when it adds to the clarity of the project. 
 
 ## Declarations
 
