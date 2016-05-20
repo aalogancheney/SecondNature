@@ -351,7 +351,8 @@ class MyClass
         if (m_someTest) 
         {
             // ...
-        } else 
+        } 
+        else 
         {
             // ...
         }
