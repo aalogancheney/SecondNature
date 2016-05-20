@@ -11,11 +11,18 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
   + [Classes & Interfaces](#classes--interfaces)
   + [Methods](#methods)
   + [Fields](#fields)
-  + [Parameters](#parameters--parameters)
+  + [Parameters & Local Variables](#parameters--parameters)
   + [Delegates](#delegates--delegates)
   + [Events](#events--events)
   + [Properties](#properties)
   + [Misc](#misc)
+- [Practices](#practices)
+  + [Serialized Fields](#serialized-fields)
+  + [Properties](#properties)
+  + [Optimization](#optimization)
+  + [Inheritence](#inheritence)
+  + [Interfaces](#interfaces)
+  + [Tooltips](#tooltips)
 - [Declarations](#declarations)
   + [Access Level Modifiers](#access-level-modifiers)
   + [Fields & Variables](#fields--variables)
@@ -28,6 +35,7 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
 - [Brace Style](#brace-style)
 - [Switch Statements](#switch-statements)
 - [Language](#language)
+- [Version Control](#version-control)
 
 
 ## Nomenclature
@@ -103,17 +111,23 @@ private int m_myPrivateVariable
 
 ### Parameters & Local Variables
 
-Parameters are written in __lowerCamelCase__.
+Parameters and local variables within functions are written in __lowerCamelCase__.
 
 __BAD:__
 
 ```c#
 public void DoSomething(Vector3 Location)
+{
+    Vector3 TempLocation = Location + Location;
+}
 ```
 __GOOD:__
 
 ```c#
 public void DoSomething(Vector3 location)
+{
+    Vector3 tempLocation = location + location;
+}
 ```
 
 Single character values to be avoided except for temporary looping variables.
@@ -198,12 +212,161 @@ String URL
 findPostByID
 ```
 
+## Practices
+
+The following guidelines highlight important practices that should be followed. These rules are not hard-and-fast
+and they may be broken from time to time, but generally they help to write better code earlier in the project 
+without the need for extensive debugging.
+
+### Serialized Fields
+
+Fields in a class should be marked private and tagged with the `[SerializeField]` property to expose it in the Editor.
+
+__BAD__:
+
+```c#
+public bool m_myBool;
+```
+
+__GOOD:__
+
+```c#
+[SerializeField]
+private bool m_myBool;
+```
+
+This should only apply to information that needs to be exposed in the Editor. If a variable is truly private and
+doesn't need to be shown in the Editor, then it does not need a `[SerializeField]` tag.
+
+### Properties
+
+Properties should be preferred over using access restrictions on variables. This has two distinct advantages:
+It allows for specific read-only and/or write-only access to variables; and it allows extra code to be written
+for variable modifications.
+
+For example:
+
+```c#
+[SerializeField]
+private float m_myReadWriteFloat;
+
+[SerializeField]
+private int m_myReadInt;
+
+private int m_floatAccessCounter = 0;
+private int m_floatModificationCounter = 0;
+private int m_intAccessCounter = 0;
+
+public float MyFloat 
+{ 
+    get 
+    { 
+        ++m_floatAccessCounter;
+        return m_myReadWriteFloat; 
+    } 
+    set 
+    { 
+        ++m_floatModificationCounter;
+        m_myReadWriteFloat = value; 
+    } 
+}
+
+public int MyInt
+{
+    get
+    {
+        ++m_intAccessCounter;
+        return m_myReadInt;
+    }
+}
+```
+
+In the above example, the floating point variable is both read and write while the integer variable is a read-only variable. 
+By adding/removing the `get` and `set` methods, the accessability of a variable can be quickly updated, and other
+code can accompany the accessing. The example is simplistic, keeping track of a counter, but it could for example
+perform any initialization (lazy initialization), or compute a value to return.
+
+### Optimization
+
+Unity provides several methods such as `GameObject.Find()` and `GetComponent<T>()` which are commonly used 
+and are very useful but are rather inefficient.
+To prevent unnecessary calls to these kinds of functions, they should be used sparingly and only in initialization functions.
+
+For example:
+
+__BAD:__
+
+```c#
+public class MyClass
+{
+    [SerializeField]
+    private string m_gameObjectName;
+
+    private void Update ()
+    {
+        GameObject otherGameObject = GameObject.Find(m_gameObjectName);
+        if(otherGameObject != null)
+        {
+            CoolComponent otherCoolComponent = otherGameObject.GetComponent<CoolComponent>();
+            otherCoolComponent.DoCoolThing();
+        }
+    }
+}
+```
+
+__GOOD:__
+
+```c#
+public class MyClass
+{
+    [SerializeField]
+    private string m_gameObjectName;
+    
+    private CoolComponent m_coolComponent;
+    
+    private void Start ()
+    {
+        GameObject otherGameObject = GameObject.Find(m_gameObjectName);
+        if(otherGameObject != null)
+        {
+            m_coolComponent = otherGameObject.GetComponent<CoolComponent>();
+        }
+        else
+        {
+            Debug.LogError("Could not find game object with name " + m_gameObjectName);
+        }
+    }
+
+    private void Update ()
+    {
+        m_coolComponent.DoCoolThing();
+    }
+}
+```
+
+In the example above, the expensive operations `GameObject.Find()` and `GetComponent()` were moved into the `Start()` method
+and the `CoolComponent` variable was cached as a member variable of the `MyClass` class. Since `Update()` is called every
+frame, the first version would waste a lot of resources making function calls while the second option takes advantage
+of the initialization MonoBehaviour methods. 
+
+Alternatively, one could simply make the `CoolComponent` variable a serialized field, which exposes it in the Editor,
+and the object in question could be dragged to the reference. Different implementation details depend on the particular
+needs of the situation, but the basic idea still holds: keep expensive operations in the initialization code, cache variables
+when appropriate, and declutter the various Update methods. 
+
+### Inheritence
+
+### Interfaces
+
+### Tooltips
+
 ## Declarations
 
 ### Access Level Modifiers
 
 Access level modifiers should be explicitly defined for classes, methods and
-member variables.
+member variables. Always prefer the strictest version of access and use private
+whenever possible. This helps declutter the auto-complete list with unneeded variables and methods.
 
 ### Fields & Variables
 
