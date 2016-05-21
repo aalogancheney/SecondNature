@@ -119,7 +119,7 @@ Parameters and local variables within functions are written in __lowerCamelCase_
 __BAD:__
 
 ```c#
-public void DoSomething(Vector3 Location)
+public void DoSomething (Vector3 Location)
 {
     Vector3 TempLocation = Location + Location;
 }
@@ -127,7 +127,7 @@ public void DoSomething(Vector3 Location)
 __GOOD:__
 
 ```c#
-public void DoSomething(Vector3 location)
+public void DoSomething (Vector3 location)
 {
     Vector3 tempLocation = location + location;
 }
@@ -144,24 +144,24 @@ When declaring delegates, DO add the suffix __EventHandler__ to names of delegat
 __BAD:__
 
 ```c#
-public delegate void Click()
+public delegate void Click ()
 ```
 __GOOD:__
 
 ```c#
-public delegate void ClickEventHandler()
+public delegate void ClickEventHandler ()
 ```
 DO add the suffix __Callback__ to names of delegates other than those used as event handlers.
 
 __BAD:__
 
 ```c#
-public delegate void Render()
+public delegate void Render ()
 ```
 __GOOD:__
 
 ```c#
-public delegate void RenderCallback()
+public delegate void RenderCallback ()
 ```
 ### Events
 
@@ -270,6 +270,22 @@ Spacing is especially important, as code needs to be easily readable.
 
 Indentation is using spaces - never tabs.
 
+#### Methods
+
+Methods should have spaces after opening parentheses:
+
+__BAD:__
+
+```c#
+public void Foo(int a, int b);
+```
+
+__GOOD:__
+
+```c#
+public void Foo (int a, int b);
+```
+
 #### Blocks
 
 Indentation for blocks uses 4 spaces:
@@ -279,7 +295,7 @@ __BAD:__
 ```c#
 for (int i = 0; i < 10; i++) 
 {
-  Debug.Log("index = " + i);
+  Debug.Log ("index = " + i);
 }
 ```
 
@@ -288,7 +304,7 @@ __GOOD:__
 ```c#
 for (int i = 0; i < 10; i++) 
 {
-    Debug.Log("index = " + i);
+    Debug.Log ("index = " + i);
 }
 ```
 
@@ -300,14 +316,14 @@ __BAD:__
 
 ```c#
 CoolUIWidget widget =
-    SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
+    SomeIncrediblyLongExpression (that, reallyWouldNotFit, on, aSingle, line);
 ```
 
 __GOOD:__
 
 ```c#
 CoolUIWidget widget =
-        SomeIncrediblyLongExpression(that, reallyWouldNotFit, on, aSingle, line);
+        SomeIncrediblyLongExpression (that, reallyWouldNotFit, on, aSingle, line);
 ```
 
 ### Line Length
@@ -332,7 +348,7 @@ __BAD:__
 
 ```c#
 class MyClass {
-    void DoSomething() {
+    void DoSomething () {
         if (m_someTest) {
             // ...
         }
@@ -348,7 +364,7 @@ __GOOD:__
 ```c#
 class MyClass 
 {
-    void DoSomething() 
+    void DoSomething () 
     {
         if (m_someTest) 
         {
@@ -369,8 +385,8 @@ __BAD:__
 
 ```c#
 if (m_someTest)
-    DoSomething();
-if (m_someTest) DoSomethingElse();
+    DoSomething ();
+if (m_someTest) DoSomethingElse ();
 ```
 
 __GOOD:__
@@ -378,9 +394,9 @@ __GOOD:__
 ```c#
 if (m_someTest) 
 {
-    DoSomething();
+    DoSomething ();
 }
-if (m_someTest) { DoSomethingElse(); }
+if (m_someTest) { DoSomethingElse (); }
 ```
 
 
@@ -422,13 +438,13 @@ __BAD:__
 ```c#
 private void Start ()
 {
-    Debug.Log("This objects position before: " + this.gameObject.transform.position);
-    this.gameObject.rigidbody.AddForce(new Vector3.up, ForceMode.Impulse);
+    Debug.Log ("This objects position before: " + this.gameObject.transform.position);
+    this.gameObject.rigidbody.AddForce (new Vector3.up, ForceMode.Impulse);
 }
 
 private void Update ()
 {
-    Debug.Log("This objects position after: " + this.gameObject.transform.position);
+    Debug.Log ("This objects position after: " + this.gameObject.transform.position);
 }
 ```
 
@@ -532,11 +548,11 @@ public class MyClass
 
     private void Update ()
     {
-        GameObject otherGameObject = GameObject.Find(m_gameObjectName);
-        if(otherGameObject != null)
+        GameObject otherGameObject = GameObject.Find (m_gameObjectName);
+        if (otherGameObject != null)
         {
-            CoolComponent otherCoolComponent = otherGameObject.GetComponent<CoolComponent>();
-            otherCoolComponent.DoCoolThing();
+            CoolComponent otherCoolComponent = otherGameObject.GetComponent<CoolComponent> ();
+            otherCoolComponent.DoCoolThing ();
         }
     }
 }
@@ -554,26 +570,26 @@ public class MyClass
     
     private void Start ()
     {
-        GameObject otherGameObject = GameObject.Find(m_gameObjectName);
-        if(otherGameObject != null)
+        GameObject otherGameObject = GameObject.Find (m_gameObjectName);
+        if (otherGameObject != null)
         {
-            m_coolComponent = otherGameObject.GetComponent<CoolComponent>();
+            m_coolComponent = otherGameObject.GetComponent<CoolComponent> ();
         }
         else
         {
-            Debug.LogError("Could not find game object with name " + m_gameObjectName);
+            Debug.LogError ("Could not find game object with name " + m_gameObjectName);
         }
     }
 
     private void Update ()
     {
-        m_coolComponent.DoCoolThing();
+        m_coolComponent.DoCoolThing ();
     }
 }
 ```
 
-In the example above, the expensive operations `GameObject.Find()` and `GetComponent()` were moved into the `Start()` method
-and the `CoolComponent` variable was cached as a member variable of the `MyClass` class. Since `Update()` is called every
+In the example above, the expensive operations `GameObject.Find ()` and `GetComponent ()` were moved into the `Start ()` method
+and the `CoolComponent` variable was cached as a member variable of the `MyClass` class. Since `Update ()` is called every
 frame, the first version would waste a lot of resources making function calls while the second option takes advantage
 of the initialization MonoBehaviour methods. 
 
@@ -598,7 +614,7 @@ public abstract class Enemy
     
     private void Awake ()
     {
-        m_player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        m_player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
     }
     
     protected virtual void AttackPlayer ()
@@ -613,7 +629,7 @@ public class FlyingEnemy : Enemy
 {
     protected override void AttackPlayer ()
     {
-        base.AttackPlayer();
+        base.AttackPlayer ();
         
         // ... Extra code for animation, sound effects, particle effects, etc. 
     }
@@ -628,7 +644,7 @@ public class SwimmingEnemy : Enemy
 {
     protected override void AttackPlayer ()
     {
-        base.AttackPlayer();
+        base.AttackPlayer ();
         
         // ... Extra code for animation, sound effects, particle effects, etc. 
     }
@@ -657,7 +673,7 @@ An actual interface in C# is defined as follows:
 ```c#
 public interface IInterface
 {
-    void DoInterfaceThing();
+    void DoInterfaceThing ();
     bool InterfaceBool { get; set; }
 }
 ```
@@ -681,27 +697,27 @@ then one could create the following interface:
 ```c#
 public interface IAudioService
 {
-    void PlaySoundEffect2D(string audioFileName);
-    void PlaySoundEffect2D(string audioFileName, float volume);
-    void PlaySoundEffect2D(string audioFileName, float volume, bool loop);
-    void StopSoundEffect2D(string audioFileName);
-    void StopAllSoundEffects2D();
+    void PlaySoundEffect2D (string audioFileName);
+    void PlaySoundEffect2D (string audioFileName, float volume);
+    void PlaySoundEffect2D (string audioFileName, float volume, bool loop);
+    void StopSoundEffect2D (string audioFileName);
+    void StopAllSoundEffects2D ();
     
-    void PlaySoundEffect3D(string audioFileName, Vector3 location);
-    void PlaySoundEffect3D(string audioFileName, Vector3 location, float volume);
-    void PlaySoundEffect3D(string audioFileName, Vector3 location, float volume, bool loop);
-    void StopSoundEffect3D(string audioFileName);
-    void StopAllSoundEffects3D();
+    void PlaySoundEffect3D (string audioFileName, Vector3 location);
+    void PlaySoundEffect3D (string audioFileName, Vector3 location, float volume);
+    void PlaySoundEffect3D (string audioFileName, Vector3 location, float volume, bool loop);
+    void StopSoundEffect3D (string audioFileName);
+    void StopAllSoundEffects3D ();
     
-    void PlayMusic(string audioFileName, string layer);
-    void PlayMusic(string audioFileName, string layer, float volume);
-    void PlayMusic(string audioFileName, string layer, float volume, bool loop);
-    void SetLayerVolume(string layer, float volume);
-    void PauseLayer(string layer, bool pause);
-    void RestartLayer(string layer);
+    void PlayMusic (string audioFileName, string layer);
+    void PlayMusic (string audioFileName, string layer, float volume);
+    void PlayMusic (string audioFileName, string layer, float volume, bool loop);
+    void SetLayerVolume (string layer, float volume);
+    void PauseLayer (string layer, bool pause);
+    void RestartLayer (string layer);
     
-    void PlayNarration(string audioFileName);
-    void PlayNarration(string audioFileName, float otherAudioTargetVolume);
+    void PlayNarration (string audioFileName);
+    void PlayNarration (string audioFileName, float otherAudioTargetVolume);
 }
 ```
 
@@ -726,7 +742,7 @@ For example:
 public class MyClass
 {
     [SerializeField]
-    [Tooltip("This integer indicates the priority of this script: higher numbers have a more important precedence.")]
+    [Tooltip ("This integer indicates the priority of this script: higher numbers have a more important precedence.")]
     private int m_myInt;
 }
 ```
@@ -753,7 +769,7 @@ __BAD:__
 private int m_myInt;
 
 // Does the thing we talked about
-private void DoThing();
+private void DoThing ();
 ```
 
 __GOOD:__
@@ -764,7 +780,7 @@ private int m_numberOfDeaths;
 // Returns a negative value if the player is on the left of the screen,
 // 0 if they are in the middle, and a positive value if they are on
 // the right of the screen.
-private float GetPlayerPosition();
+private float GetPlayerPosition ();
 ```
 
 The comments in the bad example don't add any clarity and only restate what the variable name indicates.
