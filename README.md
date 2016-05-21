@@ -198,21 +198,22 @@ public int MyInt { get { return m_myInt; } set { m_myInt = value; } }
 
 ### Misc
 
-In code, acronyms should be capitalized in full. For example:
+In code, acronyms should be considered as a word. This improves readability and clarity
+for where a particular acronym begins/ends. For example:
 
 __BAD:__
-
-```c#
-XmlHttpRequest
-String url
-findPostById
-```
-__GOOD:__
 
 ```c#
 XMLHTTPRequest
 String URL
 findPostByID
+```
+__GOOD:__
+
+```c#
+XmlHttpRequest
+String url
+findPostById
 ```
 
 ## Declarations
