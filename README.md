@@ -44,11 +44,10 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
 
 ## MonoDevelop Settings
 
-These different settings can be set up automatically through the code formatting within MonoDevelop. To access the
-code formatting in MonoDevelop, go to: Project > Solution Options. In the pop up window, go to: Source Code > Code Formatting > C# Source Code > C# Format > Edit tab. There you will find all of these options available to edit and customize. Then, whenever
-you create a new script and save the file, it will automatically format everything appropriately. 
-
-If there are questions about how to set this up, let Aaron know.
+You will find linked here a policy file that can automatically be imported into MonoDevelop to set up automatic formatting.
+It can be found [here](https://github.com/aalogancheney/SecondNature/blob/master/SecondNaturePolicies.mdpolicy). To import, open
+your MonoDevelop project and go to Project > Apply Policy, and select the `.mdpolicy` file linked above. This will 
+automatically format the source files. 
 
 ## Nomenclature
 
