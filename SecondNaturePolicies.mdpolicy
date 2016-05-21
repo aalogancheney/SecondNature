@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PolicySet name="SecondNaturePolicies.mdpolicy">
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+  <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
+    <IndentSwitchBody>True</IndentSwitchBody>
+    <AlignEmbeddedStatements>False</AlignEmbeddedStatements>
+    <IndentPreprocessorDirectives>False</IndentPreprocessorDirectives>
+    <AnonymousMethodBraceStyle>NextLine</AnonymousMethodBraceStyle>
+    <PropertyBraceStyle>NextLine</PropertyBraceStyle>
+    <PropertyGetBraceStyle>NextLine</PropertyGetBraceStyle>
+    <PropertySetBraceStyle>NextLine</PropertySetBraceStyle>
+    <EventBraceStyle>NextLine</EventBraceStyle>
+    <EventAddBraceStyle>NextLine</EventAddBraceStyle>
+    <EventRemoveBraceStyle>NextLine</EventRemoveBraceStyle>
+    <StatementBraceStyle>NextLine</StatementBraceStyle>
+    <ElseNewLinePlacement>NewLine</ElseNewLinePlacement>
+    <CatchNewLinePlacement>NewLine</CatchNewLinePlacement>
+    <FinallyNewLinePlacement>NewLine</FinallyNewLinePlacement>
+    <WhileNewLinePlacement>NewLine</WhileNewLinePlacement>
+    <EmbeddedStatementPlacement>DoNotCare</EmbeddedStatementPlacement>
+    <ArrayInitializerBraceStyle>NextLine</ArrayInitializerBraceStyle>
+    <AfterDelegateDeclarationParameterComma>True</AfterDelegateDeclarationParameterComma>
+    <BeforeSizeOfParentheses>True</BeforeSizeOfParentheses>
+    <BeforeTypeOfParentheses>True</BeforeTypeOfParentheses>
+    <SpacesAfterTypecast>True</SpacesAfterTypecast>
+    <SpacesBeforeArrayDeclarationBrackets>True</SpacesBeforeArrayDeclarationBrackets>
+    <MethodCallClosingParenthesesOnNewLine>NewLine</MethodCallClosingParenthesesOnNewLine>
+    <MethodDeclarationParameterWrapping>WrapIfTooLong</MethodDeclarationParameterWrapping>
+    <MethodDeclarationClosingParenthesesOnNewLine>NewLine</MethodDeclarationClosingParenthesesOnNewLine>
+    <IndexerDeclarationClosingBracketOnNewLine>NewLine</IndexerDeclarationClosingBracketOnNewLine>
+    <IndexerClosingBracketOnNewLine>NewLine</IndexerClosingBracketOnNewLine>
+  </CSharpFormattingPolicy>
+</PolicySet>
