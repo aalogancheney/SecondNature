@@ -38,6 +38,7 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
   + [Inheritence](#inheritence)
   + [Interfaces](#interfaces)
   + [Tooltips](#tooltips)
+  + [Comments](#comments)
 
 
 ## Nomenclature
@@ -734,3 +735,62 @@ In combination with descriptive variable names, Tooltips can boost the clarity o
 __Note:__ Tooltips should not be used everywhere, nor should they be created before a class is finalized. This would
 violate the "premature optimization" rule. Only after a class has been _reasonably_ finalized should Tooltips be added,
 and only when it adds to the clarity of the project. 
+
+### Comments
+
+Comments should be used for added clarity and documentation of code. 
+Prefer "self documenting" code by using good variable/method/property names, but add comments when appropriate to explain
+a tricky piece of code, an engineering decision that explains why a particular implementation method was used, or to 
+add an explanation for how a method/variable works.
+
+Comments should be used only when needed and should add to clarity. For example:
+
+__BAD:__
+
+```c#
+// My private integer.
+private int m_myInt;
+
+// Does the thing we talked about
+private void DoThing();
+```
+
+__GOOD:__
+
+```c#
+private int m_numberOfDeaths;
+
+// Returns a negative value if the player is on the left of the screen,
+// 0 if they are in the middle, and a positive value if they are on
+// the right of the screen.
+private float GetPlayerPosition();
+```
+
+The comments in the bad example don't add any clarity and only restate what the variable name indicates.
+In the good example, there is no comment for the `m_numberOfDeaths` variable because its name is 
+self explanatory. The function has an extra explanation for what the return type indicates. 
+
+Auto commenting is also made possible by the MonoDevelop IDE. To create an auto comment, above any
+variable/property/method, type three `/` characters and the comment will be generated. It looks something
+like this:
+
+```c#
+/// <summary>
+/// Plays a 2D sound with the given name at the given volume and with the optional looping parameter.
+/// </summary>
+/// <param name="sound">Sound.</param>
+/// <param name="volume">Volume.</param>
+/// <param name="loop">If set to <c>true</c> loop.</param>
+/// <param name="outAudioSource">Out audio source.</param>
+void PlaySound2D (string sound, float volume, bool loop, ref GameObject outAudioSource);
+```
+
+Most of the text is auto generated. This kind of comment will show up in auto complete when typing the 
+name of a function/property/variable, and it will also appear when the function is moused over. These
+kinds of comments are powerful because they provide documentation, but they can also be counter productive.
+Only create these style of comments when the class is finalized, or when providing an interface to use, as
+the implementation details for many classes may change throughout the project.
+
+Comments should either be of the auto complete style, or they should have two `/` characters for every
+line of comment.
+
