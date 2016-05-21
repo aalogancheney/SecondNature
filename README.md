@@ -6,6 +6,7 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
 
 ## Table of Contents
 
+- [MonoDevelop Settings](#monodevelop-settings)
 - [Nomenclature](#nomenclature)
   + [Namespaces](#namespaces)
   + [Classes & Interfaces](#classes--interfaces)
@@ -41,6 +42,14 @@ The overarching goals are __conciseness__, __readability__, __simplicity__, and 
   + [Comments](#comments)
 
 
+## MonoDevelop Settings
+
+These different settings can be set up automatically through the code formatting within MonoDevelop. To access the
+code formatting in MonoDevelop, go to: Project > Solution Options. In the pop up window, go to: Source Code > Code Formatting > C# Source Code > C# Format > Edit tab. There you will find all of these options available to edit and customize. Then, whenever
+you create a new script and save the file, it will automatically format everything appropriately. 
+
+If there are questions about how to set this up, let Aaron know.
+
 ## Nomenclature
 
 Naming should be well thought out and should clearly indicate the purpose of a variable/function. 
@@ -61,7 +70,7 @@ secondnature.ai.behavior
 __GOOD__:
 
 ```c#
-SecondNature.AI.Behavior
+SecondNature.Ai.Behavior
 ```
 
 ### Classes & Interfaces
