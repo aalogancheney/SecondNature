@@ -17,6 +17,13 @@
     <BeforeDelegateDeclarationParentheses>False</BeforeDelegateDeclarationParentheses>
     <NewParentheses>False</NewParentheses>
     <BlankLinesBetweenMembers>1</BlankLinesBetweenMembers>
+    <MethodCallArgumentWrapping>WrapIfTooLong</MethodCallArgumentWrapping>
+    <MethodCallClosingParenthesesOnNewLine>NewLine</MethodCallClosingParenthesesOnNewLine>
+    <MethodDeclarationParameterWrapping>WrapIfTooLong</MethodDeclarationParameterWrapping>
+    <MethodDeclarationClosingParenthesesOnNewLine>SameLine</MethodDeclarationClosingParenthesesOnNewLine>
+    <IndexerDeclarationParameterWrapping>WrapIfTooLong</IndexerDeclarationParameterWrapping>
+    <IndexerDeclarationClosingBracketOnNewLine>SameLine</IndexerDeclarationClosingBracketOnNewLine>
+    <IndexerClosingBracketOnNewLine>SameLine</IndexerClosingBracketOnNewLine>
   </CSharpFormattingPolicy>
   <DotNetNamingPolicy>
     <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
