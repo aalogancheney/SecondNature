@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PolicySet name="SecondNaturePolicies2.mdpolicy">
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+  <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
+    <IndentSwitchBody>True</IndentSwitchBody>
+    <AnonymousMethodBraceStyle>NextLine</AnonymousMethodBraceStyle>
+    <PropertyBraceStyle>NextLine</PropertyBraceStyle>
+    <PropertyGetBraceStyle>NextLine</PropertyGetBraceStyle>
+    <PropertySetBraceStyle>NextLine</PropertySetBraceStyle>
+    <EventBraceStyle>NextLine</EventBraceStyle>
+    <EventAddBraceStyle>NextLine</EventAddBraceStyle>
+    <EventRemoveBraceStyle>NextLine</EventRemoveBraceStyle>
+    <StatementBraceStyle>NextLine</StatementBraceStyle>
+    <ElseNewLinePlacement>NewLine</ElseNewLinePlacement>
+    <ArrayInitializerBraceStyle>NextLine</ArrayInitializerBraceStyle>
+    <BeforeConstructorDeclarationParentheses>False</BeforeConstructorDeclarationParentheses>
+    <BeforeDelegateDeclarationParentheses>False</BeforeDelegateDeclarationParentheses>
+    <NewParentheses>False</NewParentheses>
+    <BlankLinesBetweenMembers>0</BlankLinesBetweenMembers>
+  </CSharpFormattingPolicy>
+  <DotNetNamingPolicy>
+    <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
+    <ResourceNamePolicy>FileFormatDefault</ResourceNamePolicy>
+  </DotNetNamingPolicy>
+</PolicySet>
