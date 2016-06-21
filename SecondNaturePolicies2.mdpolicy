@@ -16,7 +16,7 @@
     <BeforeConstructorDeclarationParentheses>False</BeforeConstructorDeclarationParentheses>
     <BeforeDelegateDeclarationParentheses>False</BeforeDelegateDeclarationParentheses>
     <NewParentheses>False</NewParentheses>
-    <BlankLinesBetweenMembers>0</BlankLinesBetweenMembers>
+    <BlankLinesBetweenMembers>1</BlankLinesBetweenMembers>
   </CSharpFormattingPolicy>
   <DotNetNamingPolicy>
     <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
